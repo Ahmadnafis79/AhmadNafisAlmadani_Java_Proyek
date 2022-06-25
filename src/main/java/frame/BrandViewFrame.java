@@ -40,6 +40,11 @@ public class BrandViewFrame extends JFrame {
             }
         });
 
+        tambahButton.addActionListener(e -> {
+            BrandInputFrame inputFrame = new BrandInputFrame();
+            inputFrame.setVisible(true);
+        });
+
         cariButton.addActionListener(e -> {
             Connection c = Koneksi.getConnection();
             String keyword = "%" + cariTextField.getText() + "%";
