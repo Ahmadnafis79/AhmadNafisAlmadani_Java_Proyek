@@ -40,7 +40,6 @@ public class BrandViewFrame extends JFrame {
             }
         });
 
-
         cariButton.addActionListener(e -> {
             Connection c = Koneksi.getConnection();
             String keyword = "%" + cariTextField.getText() + "%";
@@ -77,7 +76,7 @@ public class BrandViewFrame extends JFrame {
                 TableModel tm = viewTable.getModel();
                 int id = Integer.parseInt(tm.getValueAt(barisTerpilih, 0).toString());
                 Connection c = Koneksi.getConnection();
-                String deleteSQL = "DELETE FROM brand WHERE id = ?";
+                String deleteSQL = "DELETE FROM brand WHERE id_brand = ?";
                 try {
                     PreparedStatement ps = c.prepareStatement(deleteSQL);
                     ps.setInt(1, id);
