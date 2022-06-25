@@ -29,7 +29,7 @@
                   <text value="Cari Brand"/>
                 </properties>
               </component>
-              <component id="c31b2" class="javax.swing.JTextField" binding="textField1" default-binding="true">
+              <component id="c31b2" class="javax.swing.JTextField" binding="cariTextField">
                 <constraints border-constraint="Center"/>
                 <properties/>
               </component>
