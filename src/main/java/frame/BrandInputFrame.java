@@ -21,23 +21,35 @@ public class BrandInputFrame extends JFrame {
         this.id = id;
     }
 
-
     public BrandInputFrame() {
         batalButton.addActionListener(e -> {
             dispose();
         });
 
-        simpanButton.addActionListener(e -> {
+        simpanButton.addActionListener(e ->{
             String nama = namaTextField.getText();
+            if (nama.equals("")){
+                JOptionPane.showMessageDialog(null,"Isi kata kunci pencarian","Validasi kata kunci kosong",JOptionPane.WARNING_MESSAGE);
+                namaTextField.requestFocus();
+                return;
+            }
             Connection c = Koneksi.getConnection();
             PreparedStatement ps;
             try {
                 if (id == 0) {
-                    String insertSQL = "INSERT INTO brand VALUES (NULL, ?)";
-                    ps = c.prepareStatement(insertSQL);
+                    String cekSQL = "SELECT * FROM brand WHERE nama= ?";
+                    ps = c.prepareStatement(cekSQL);
                     ps.setString(1, nama);
-                    ps.executeUpdate();
-                    dispose();
+                    ResultSet rs = ps.executeQuery();
+                    if (rs.next()) {
+                        JOptionPane.showMessageDialog(null, "Data sama sudah ada");
+                    } else {
+                        String insertSQL = "INSERT INTO brand VALUES (NULL, ?)";
+                        ps = c.prepareStatement(insertSQL);
+                        ps.setString(1, nama);
+                        ps.executeUpdate();
+                        dispose();
+                    }
                 } else {
                     String updateSQL = "UPDATE brand SET nama = ? WHERE id_brand = ?";
                     ps = c.prepareStatement(updateSQL);
