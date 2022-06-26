@@ -33,12 +33,29 @@ public class BrandViewFrame extends JFrame {
             isiTable();
         });
 
+        ubahButton.addActionListener(e -> {
+            int barisTerpilih = viewTable.getSelectedRow();
+            if (barisTerpilih < 0) {
+                JOptionPane.showMessageDialog(
+                        null,
+                        "Pilih Data dulu");
+                return;
+            }
+            TableModel tm = viewTable.getModel();
+            int id_brand = Integer.parseInt(tm.getValueAt(barisTerpilih, 0).toString());
+            BrandInputFrame inputFrame = new BrandInputFrame();
+            inputFrame.setId(id_brand);
+            inputFrame.isiKomponen();
+            inputFrame.setVisible(true);
+        });
+
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowActivated(WindowEvent e) {
                 isiTable();
             }
         });
+
 
         tambahButton.addActionListener(e -> {
             BrandInputFrame inputFrame = new BrandInputFrame();
@@ -79,12 +96,12 @@ public class BrandViewFrame extends JFrame {
             );
             if (pilihan == 0) {
                 TableModel tm = viewTable.getModel();
-                int id = Integer.parseInt(tm.getValueAt(barisTerpilih, 0).toString());
+                int id_brand = Integer.parseInt(tm.getValueAt(barisTerpilih, 0).toString());
                 Connection c = Koneksi.getConnection();
                 String deleteSQL = "DELETE FROM brand WHERE id_brand = ?";
                 try {
                     PreparedStatement ps = c.prepareStatement(deleteSQL);
-                    ps.setInt(1, id);
+                    ps.setInt(1, id_brand);
                     ps.executeUpdate();
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
@@ -95,6 +112,7 @@ public class BrandViewFrame extends JFrame {
         isiTable();
         init();
     }
+
 
     public void init() {
         setContentPane(mainPanel);
@@ -110,7 +128,7 @@ public class BrandViewFrame extends JFrame {
         try {
             Statement s = c.createStatement();
             ResultSet rs = s.executeQuery(selectSQL);
-            String header[] = {"id_Brand", "Nama Brand"};
+            String header[] = {"id_Brand", "Nama"};
             DefaultTableModel dtm = new DefaultTableModel(header, 0);
             viewTable.setModel(dtm);
             Object[] row = new Object[2];
