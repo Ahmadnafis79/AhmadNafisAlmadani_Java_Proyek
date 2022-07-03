@@ -80,10 +80,16 @@ public class LaptopViewFrame extends JFrame{
                 ResultSet rs = ps.executeQuery();
                 DefaultTableModel dtm = (DefaultTableModel) viewTable.getModel();
                 dtm.setRowCount(0);
-                Object[] row = new Object[2];
+                Object[] row = new Object[8];
                 while (rs.next()) {
                     row[0] = rs.getInt("kd_laptop");
                     row[1] = rs.getString("nama");
+                    row[2] = rs.getString("id_brand");
+                    row[3] = rs.getString("tipe");
+                    row[4] = rs.getString("ram");
+                    row[5] = rs.getString("harddisk");
+                    row[6] = rs.getString("prosesor");
+                    row[7] = rs.getString("harga");
                     dtm.addRow(row);
                 }
             } catch (SQLException ex) {
@@ -132,20 +138,25 @@ public class LaptopViewFrame extends JFrame{
 
     public void isiTable(){
         Connection c = Koneksi.getConnection();
-        String selectSQL = "SELECT K.*, B.nama AS nama_brand FROM laptop K " +
-                "LEFT JOIN brand B ON K.kd_Laptop = B.id_brand";
+        String selectSQL = "SELECT K.*,  B.nama AS nama_brand FROM laptop K " +
+                "LEFT JOIN brand B ON K.id_brand =B.id_brand";
         try {
             Statement s =  c.createStatement();
             ResultSet rs = s.executeQuery(selectSQL);
-            String[] header = {"Kode","Nama Brand","Nama Laptop"};
+            String[] header = {"Kode","Nama Leptop","Nama Brand","Tipe","ram","harddisk","prosesor","harga"};
             DefaultTableModel dtm = new DefaultTableModel(header, 0);
             viewTable.setModel(dtm);
             viewTable.getColumnModel().getColumn(0).setMaxWidth(32);
-            Object[] row = new Object[3];
+            Object[] row = new Object[8];
             while (rs.next()){
                 row[0] = rs.getInt("kd_laptop");
                 row[1] =rs.getString("nama");
                 row[2] =rs.getString("nama_brand");
+                row[3] =rs.getString("tipe");
+                row[4] =rs.getString("ram");
+                row[5] =rs.getString("harddisk");
+                row[6] =rs.getString("prosesor");
+                row[7] =rs.getString("harga");
                 dtm.addRow(row);
             }
         } catch (SQLException e) {
