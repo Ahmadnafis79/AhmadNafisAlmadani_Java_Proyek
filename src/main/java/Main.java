@@ -6,7 +6,7 @@ import helpers.Koneksi;
 public class Main {
     public static void main(String[] args) {
 //        Koneksi.getConnection();
-//        BrandViewFrame viewFrame = new BrandViewFrame();
+     //   BrandViewFrame viewFrame = new BrandViewFrame();
         LaptopViewFrame viewFrame = new LaptopViewFrame();
         //LaptopInputFrame viewFrame = new LaptopInputFrame();
         viewFrame.setVisible(true);
